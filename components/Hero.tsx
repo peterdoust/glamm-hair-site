@@ -29,9 +29,9 @@ export default function Hero() {
             priority
           />
         </div>
-        {/* Gradient Overlays */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,17,33,0.85), rgba(10,17,33,0.4), rgba(10,17,33,0.85))' }}></div>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,17,33,0.7), transparent, rgba(10,17,33,0.3))' }}></div>
+        {/* Gradient Overlays - Reduced tint for more visible background */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,17,33,0.55), rgba(10,17,33,0.2), rgba(10,17,33,0.55))' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,17,33,0.45), transparent, rgba(10,17,33,0.15))' }}></div>
         {/* Decorative Blurs */}
         <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full blur-[100px] opacity-30" style={{ background: '#f68961' }}></div>
         <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[100px] opacity-20" style={{ background: '#febf6b' }}></div>

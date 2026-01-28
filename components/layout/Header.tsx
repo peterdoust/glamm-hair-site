@@ -4,10 +4,17 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ShoppingCart, Heart, Menu, X, ChevronDown } from 'lucide-react';
+import { useCart } from '@/contexts/CartContext';
+import { useWishlist } from '@/contexts/WishlistContext';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { getCartCount } = useCart();
+  const { getWishlistCount } = useWishlist();
+
+  const cartCount = getCartCount();
+  const wishlistCount = getWishlistCount();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,14 +86,25 @@ export default function Header() {
               aria-label="Wishlist"
             >
               <Heart className="w-6 h-6" />
+              {wishlistCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white text-xs font-bold rounded-full flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
 
-            <button
+            <Link
+              href="/cart"
               className="relative p-2 hover:text-accent transition-colors"
               aria-label="Shopping Cart"
             >
               <ShoppingCart className="w-6 h-6" />
-            </button>
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white text-xs font-bold rounded-full flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
             {/* Mobile Menu Button */}
             <button

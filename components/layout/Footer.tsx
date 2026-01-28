@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Instagram } from 'lucide-react'
 
 export default function Footer() {
@@ -8,7 +9,15 @@ export default function Footer() {
       <div className="container-max py-12 grid gap-8 md:grid-cols-4">
         {/* Brand */}
         <div>
-          <div className="font-bold text-xl text-white mb-3">GLAMM</div>
+          <Link href="/" className="inline-block mb-3">
+            <Image
+              src="/glamm-logo.png"
+              alt="Glamm Hair Extensions"
+              width={180}
+              height={60}
+              className="h-14 w-auto brightness-0 invert"
+            />
+          </Link>
           <p className="text-white/70 max-w-xs text-sm leading-relaxed">
             Premium hair extensions shipped nationwide. Clean design, effortless installation, and natural finish.
           </p>

@@ -2,15 +2,20 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { products } from '@/lib/data'
 import { ProductGrid } from '@/components/ProductGrid'
 import { ShoppingCart, Heart, Check, Star, Truck, Shield, RotateCcw } from 'lucide-react'
+import { useCart } from '@/contexts/CartContext'
+import { useWishlist } from '@/contexts/WishlistContext'
 
 export default function ProductPage() {
   const params = useParams()
   const slug = params.slug as string
   const product = products.find((p) => p.slug === slug)
+  const { addToCart } = useCart()
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
 
   const [selectedSize, setSelectedSize] = useState('')
   const [quantity, setQuantity] = useState(1)
@@ -27,13 +32,45 @@ export default function ProductPage() {
     )
   }
 
+  const inWishlist = isInWishlist(product.id)
+  const selectedPrice = selectedSize && product.sizes_prices ? product.sizes_prices[selectedSize] : product.priceMin
+
   const handleAddToCart = () => {
     if (!selectedSize) {
       alert('Please select a size')
       return
     }
+    addToCart({
+      id: product.id,
+      title: product.title,
+      price: `$${selectedPrice}`,
+      priceMin: product.priceMin,
+      priceMax: product.priceMax,
+      image: product.image,
+      category: product.category,
+      slug: product.slug,
+      size: selectedSize,
+      selectedPrice: selectedPrice,
+    })
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2000)
+  }
+
+  const handleWishlistToggle = () => {
+    if (inWishlist) {
+      removeFromWishlist(product.id)
+    } else {
+      addToWishlist({
+        id: product.id,
+        title: product.title,
+        price: `$${product.priceMin} - $${product.priceMax}`,
+        priceMin: product.priceMin,
+        priceMax: product.priceMax,
+        image: product.image,
+        category: product.category,
+        slug: product.slug,
+      })
+    }
   }
 
   const relatedProducts = products
@@ -54,11 +91,16 @@ export default function ProductPage() {
 
         {/* Product Details */}
         <div className="grid md:grid-cols-2 gap-12 mb-16">
-          {/* Image Placeholder */}
-          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-surface to-border flex items-center justify-center">
-            <svg className="w-24 h-24 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+          {/* Product Image */}
+          <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-br from-surface to-border">
+            <Image
+              src={product.image}
+              alt={product.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 50vw"
+              priority
+            />
             {product.badge && (
               <div className="absolute top-4 right-4 px-4 py-2 rounded-full bg-accent text-white font-semibold text-sm">
                 {product.badge}
@@ -83,7 +125,13 @@ export default function ProductPage() {
               <span className="text-text-muted">(127 reviews)</span>
             </div>
 
-            <div className="text-3xl font-bold text-accent mb-6">${product.priceMin} - ${product.priceMax}</div>
+            <div className="text-3xl font-bold text-accent mb-6">
+              {selectedSize && product.sizes_prices ? (
+                <span>${product.sizes_prices[selectedSize]}</span>
+              ) : (
+                <span>${product.priceMin} - ${product.priceMax}</span>
+              )}
+            </div>
 
             <p className="text-text-muted leading-relaxed mb-8">{product.description}</p>
 
@@ -146,8 +194,13 @@ export default function ProductPage() {
                 )}
               </button>
 
-              <button className="w-14 h-14 rounded-full border-2 border-gray-200 hover:border-accent flex items-center justify-center transition-all">
-                <Heart className="w-6 h-6" />
+              <button
+                onClick={handleWishlistToggle}
+                className={`w-14 h-14 rounded-full border-2 flex items-center justify-center transition-all ${
+                  inWishlist ? 'border-accent bg-accent/10' : 'border-gray-200 hover:border-accent'
+                }`}
+              >
+                <Heart className={`w-6 h-6 ${inWishlist ? 'fill-accent text-accent' : ''}`} />
               </button>
             </div>
 
