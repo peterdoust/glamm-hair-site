@@ -6,7 +6,7 @@ import Image from 'next/image'
 import { useParams } from 'next/navigation'
 import { products } from '@/lib/data'
 import ProductCard from '@/components/ProductCard'
-import { ShoppingCart, Heart, Check, Star, Truck, Shield, RotateCcw, ChevronRight, MessageCircle, Award, Package, Zap, Info } from 'lucide-react'
+import { ShoppingCart, Heart, Check, Star, Truck, Shield, RotateCcw, ChevronRight, MessageCircle, Award, Package, Zap, Info, ImageIcon } from 'lucide-react'
 import { useCart } from '@/contexts/CartContext'
 import { useWishlist } from '@/contexts/WishlistContext'
 
@@ -81,6 +81,7 @@ export default function ProductPage() {
 
   // Create gallery array (use product image 3 times for demo)
   const gallery = [product.image, product.image, product.image]
+  const isPlaceholder = product.image.includes('placeholder')
 
   return (
     <div className="min-h-screen py-16 bg-gradient-to-b from-background to-surface">
@@ -102,13 +103,23 @@ export default function ProductPage() {
           <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             {/* Main Image */}
             <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-gradient-to-br from-accent/5 to-accent/10 mb-4 shadow-lg group">
-              <Image
-                src={gallery[selectedImage]}
-                alt={product.title}
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-700"
-                priority
-              />
+              {isPlaceholder ? (
+                <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center p-8">
+                  <ImageIcon className="w-24 h-24 text-gray-400 mb-4" />
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-accent uppercase tracking-wider mb-2">Placeholder</p>
+                    <p className="text-xl font-semibold text-gray-600">{product.title}</p>
+                  </div>
+                </div>
+              ) : (
+                <Image
+                  src={gallery[selectedImage]}
+                  alt={product.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  priority
+                />
+              )}
               {product.badge && (
                 <div className="absolute top-6 left-6 bg-gradient-to-r from-accent to-accent-dark text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg">
                   {product.badge}
@@ -128,7 +139,13 @@ export default function ProductPage() {
                       : 'hover:scale-105 opacity-70 hover:opacity-100'
                   }`}
                 >
-                  <Image src={img} alt={`${product.title} view ${index + 1}`} fill className="object-cover" />
+                  {isPlaceholder ? (
+                    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                      <ImageIcon className="w-8 h-8 text-gray-400" />
+                    </div>
+                  ) : (
+                    <Image src={img} alt={`${product.title} view ${index + 1}`} fill className="object-cover" />
+                  )}
                 </button>
               ))}
             </div>

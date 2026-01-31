@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Eye, Heart, Check, Ruler } from 'lucide-react';
+import { Star, Eye, Heart, Check, Ruler, ImageIcon } from 'lucide-react';
 import { Product } from '@/lib/data';
 
 interface ProductCardProps {
@@ -12,6 +12,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const isPlaceholder = product.image.includes('placeholder');
 
   return (
     <Link href={`/products/${product.slug}`} className="group cursor-pointer h-full flex flex-col relative">
@@ -35,14 +37,25 @@ export default function ProductCard({ product }: ProductCardProps) {
           )}
 
           {/* Product Image */}
-          <Image
-            src={product.image}
-            alt={product.title}
-            fill
-            sizes="100vw"
-            className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
-            onLoad={() => setImageLoaded(true)}
-          />
+          {isPlaceholder || imageError ? (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-100 to-gray-200 flex flex-col items-center justify-center p-4">
+              <ImageIcon className="w-16 h-16 text-gray-400 mb-3" />
+              <div className="text-center">
+                <p className="text-xs font-bold text-accent uppercase tracking-wider mb-1">Placeholder</p>
+                <p className="text-sm font-semibold text-gray-600">{product.title}</p>
+              </div>
+            </div>
+          ) : (
+            <Image
+              src={product.image}
+              alt={product.title}
+              fill
+              sizes="100vw"
+              className={`object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}
+              onLoad={() => setImageLoaded(true)}
+              onError={() => setImageError(true)}
+            />
+          )}
 
           {/* Hover Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
@@ -137,7 +150,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
             <div className="flex items-center gap-1 text-xs font-semibold text-text-muted bg-surface px-2.5 py-1.5 rounded-lg border border-border">
               <Ruler className="w-3 h-3" />
-              <span>{product.sizes?.length || 8} Sizes</span>
+              <span>{product.sizes?.length || 8} Lengths</span>
             </div>
           </div>
 
