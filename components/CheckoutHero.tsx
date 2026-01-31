@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { Shield, Lock, CreditCard, Sparkles } from 'lucide-react'
+import { Shield, Lock, CreditCard, Sparkles, Check } from 'lucide-react'
 
 export function CheckoutHero() {
   return (

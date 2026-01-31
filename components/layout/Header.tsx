@@ -37,7 +37,7 @@ export default function Header() {
   ];
 
   return (
-    <header className={`sticky top-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+    <header className={`sticky top-0 z-50 transition-all duration-300 border-b border-border ${scrolled ? 'bg-white shadow-md' : 'bg-white'}`}>
       <div className="container-max">
         <div className="flex items-center justify-between h-24">
           {/* Logo */}

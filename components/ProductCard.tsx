@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Star, Eye, Heart } from 'lucide-react';
+import { Star, Eye, Heart, Check, Ruler } from 'lucide-react';
 import { Product } from '@/lib/data';
 
 interface ProductCardProps {
@@ -29,8 +29,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           {/* Border Frame */}
           <div className="absolute inset-0 border-4 border-white/50 rounded-t-2xl z-10 pointer-events-none"></div>
 
-          {/* Shimmer Animation */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+          {/* Shimmer Animation - only show when image not loaded */}
+          {!imageLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent animate-shimmer"></div>
+          )}
 
           {/* Product Image */}
           <Image
@@ -103,22 +105,49 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="font-bold text-text mb-2 line-clamp-2 group-hover:text-accent transition-colors duration-300 text-sm leading-tight">
-            {product.title}
-          </h3>
+          <div className="mb-2.5">
+            <h3 className="font-bold text-base mb-1 text-text group-hover:text-accent transition-colors duration-300 line-clamp-2 leading-tight">
+              {product.title}
+            </h3>
+            <div className="h-0.5 w-10 bg-gradient-to-r from-accent to-transparent rounded-full group-hover:w-16 transition-all duration-500"></div>
+          </div>
 
-          {/* Price */}
-          <div className="mt-auto pt-3 border-t border-border/50">
-            <div className="flex items-end justify-between">
-              <div>
-                <span className="text-xs text-text-muted block mb-0.5">Starting at</span>
-                <span className="text-xl font-bold text-text">${product.priceMin}.00</span>
-              </div>
-              <div className="px-3 py-1.5 rounded-lg bg-accent/10 text-accent text-xs font-semibold">
-                View Details
+          {/* Price Section */}
+          <div className="mt-auto mb-3">
+            <div className="relative overflow-hidden rounded-xl p-3 bg-gradient-to-br from-accent/10 via-accent/5 to-accent-dark/10 border-2 border-accent/20">
+              <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'linear-gradient(45deg, transparent 48%, rgba(201,169,126,0.1) 49%, rgba(201,169,126,0.1) 51%, transparent 52%)', backgroundSize: '20px 20px' }}></div>
+              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+              <div className="relative">
+                <p className="text-xs text-text-muted font-medium mb-0.5">Starting at</p>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-2xl font-bold bg-gradient-to-r from-accent via-accent-dark to-accent bg-clip-text text-transparent">${product.priceMin}.00</span>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Tags Row */}
+          <div className="flex items-center gap-2 mb-3 flex-wrap">
+            <div className="flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1.5 rounded-lg border border-green-200">
+              <Check className="w-3 h-3" />
+              <span>In Stock</span>
+            </div>
+            <div className="flex items-center gap-1 text-xs font-semibold text-accent bg-accent/10 px-2.5 py-1.5 rounded-lg border border-accent/20">
+              <span>Free Ship</span>
+            </div>
+            <div className="flex items-center gap-1 text-xs font-semibold text-text-muted bg-surface px-2.5 py-1.5 rounded-lg border border-border">
+              <Ruler className="w-3 h-3" />
+              <span>{product.sizes?.length || 8} Sizes</span>
+            </div>
+          </div>
+
+          {/* View Details Button */}
+          <button className="relative w-full py-3 rounded-xl overflow-hidden font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 shadow-md hover:shadow-lg group/button">
+            <div className="absolute inset-0 bg-gradient-to-r from-accent via-accent-dark to-accent bg-[length:200%_100%] animate-gradient"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/button:translate-x-full transition-transform duration-700"></div>
+            <Eye className="w-4 h-4 text-white relative z-10" />
+            <span className="text-white relative z-10 text-sm">View Details</span>
+          </button>
         </div>
       </div>
     </Link>
