@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import PolicyLayout from '@/components/layout/PolicyLayout'
 import TermsContactSection from '@/components/TermsContactSection'
 import { getContact } from '@/lib/settings'
+import { SHOW_PHONE } from '@/lib/content'
 
 export const metadata: Metadata = {
   title: 'Terms of Service | Glamm Hair Extensions',
@@ -296,7 +297,7 @@ export default async function TermsOfServicePage() {
         to consumers for the return of a product.
       </p>
 
-      <TermsContactSection phone={contact.phone} hours={contact.hours} />
+      <TermsContactSection phone={SHOW_PHONE ? contact.phone : ''} email={contact.email} hours={contact.hours} />
     </PolicyLayout>
   )
 }

@@ -203,6 +203,12 @@ export type ContactContent = {
   facebookHref: string
 }
 
+/**
+ * Customer contact is email-only for now: the storefront shows no phone even
+ * when one is saved in Admin → Contact. Flip to true to bring it back.
+ */
+export const SHOW_PHONE = false
+
 /** What the contact page shipped with — also the fallback for blank input. */
 export const DEFAULT_CONTACT: ContactContent = {
   eyebrow: 'Get In Touch',
@@ -213,7 +219,8 @@ export const DEFAULT_CONTACT: ContactContent = {
   emailLabel: 'Email Us',
   email: 'support@glammhairextensions.com',
   phoneLabel: 'Call Us',
-  phone: '+1 310-461-5791',
+  // Blank = no phone shown anywhere; customers reach us by email for now.
+  phone: '',
   addressLabel: 'Visit Us',
   addressLine1: '3959 Wilshire Blvd a25',
   addressLine2: 'Los Angeles, CA 90010, United States',

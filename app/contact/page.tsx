@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Mail, Phone, MapPin, Clock, Send, Instagram, MessageCircle, Facebook, BookOpen } from 'lucide-react'
 import { getContact } from '@/lib/settings'
-import { mapEmbedSrc, mapsSearchHref } from '@/lib/content'
+import { mapEmbedSrc, mapsSearchHref, SHOW_PHONE } from '@/lib/content'
 import ContactForm from './ContactForm'
 
 export const dynamic = 'force-dynamic'
@@ -22,10 +22,12 @@ function InfoCard({ icon, title, children }: { icon: React.ReactNode; title: str
 const infoLink = 'text-text-muted hover:text-accent transition-colors'
 
 export default async function ContactPage() {
-  const c = await getContact()
+  const saved = await getContact()
+  const c = SHOW_PHONE ? saved : { ...saved, phone: '' }
 
   // Stored bare so the admin form takes a plain address/number; the scheme is
-  // added here. tel: keeps only digits and a leading +.
+  // added here. tel: keeps only digits and a leading +. A blank phone hides
+  // its card, leaving email as the way to reach us.
   const mailto = `mailto:${c.email}`
   const tel = `tel:${c.phone.replace(/[^\d+]/g, '')}`
   const address = [c.addressLine1, c.addressLine2].filter(Boolean).join(', ')
@@ -54,13 +56,15 @@ export default async function ContactPage() {
 
       {/* Contact Info Cards */}
       <section className="section container-max">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <div className={`grid md:grid-cols-2 ${c.phone ? 'lg:grid-cols-4' : 'lg:grid-cols-3'} gap-6 mb-16`}>
           <InfoCard icon={<Mail className="w-7 h-7 text-white" />} title={c.emailLabel}>
             <a href={mailto} className={infoLink}>{c.email}</a>
           </InfoCard>
-          <InfoCard icon={<Phone className="w-7 h-7 text-white" />} title={c.phoneLabel}>
-            <a href={tel} className={infoLink}>{c.phone}</a>
-          </InfoCard>
+          {c.phone && (
+            <InfoCard icon={<Phone className="w-7 h-7 text-white" />} title={c.phoneLabel}>
+              <a href={tel} className={infoLink}>{c.phone}</a>
+            </InfoCard>
+          )}
           <InfoCard icon={<MapPin className="w-7 h-7 text-white" />} title={c.addressLabel}>
             {mapsHref ? (
               <a href={mapsHref} className={infoLink} target="_blank" rel="noopener noreferrer">

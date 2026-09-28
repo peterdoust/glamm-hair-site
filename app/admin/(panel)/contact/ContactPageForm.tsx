@@ -121,7 +121,7 @@ export default function ContactPageForm({ initial }: { initial: ContactContent }
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
           <TextField label="Phone card title" value={c.phoneLabel} onChange={(v) => set('phoneLabel', v)} />
-          <TextField label="Phone number" value={c.phone} onChange={(v) => set('phone', v)} hint="Written however you want it shown — the tel: link is added for you." />
+          <TextField label="Phone number" value={c.phone} onChange={(v) => set('phone', v)} hint="Written however you want it shown — the tel: link is added for you. Leave blank to hide the phone across the site." />
         </div>
         <TextField label="Address card title" value={c.addressLabel} onChange={(v) => set('addressLabel', v)} />
         <div className="grid sm:grid-cols-2 gap-4">

@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { Phone, Mail, MessageCircle, ArrowRight } from 'lucide-react'
+import { Mail, MessageCircle, ArrowRight } from 'lucide-react'
 
 export function ContactPagePromo() {
   return (
@@ -32,15 +32,8 @@ export function ContactPagePromo() {
         </div>
 
         {/* Contact Methods Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 gap-8 mb-16">
           {[
-            {
-              icon: Phone,
-              title: 'Call Us',
-              description: 'Speak with our experts',
-              action: 'Call Now',
-              href: 'tel:+13104615791'
-            },
             {
               icon: Mail,
               title: 'Email Us',

@@ -25,10 +25,11 @@ function CallTextButtons({ phone }: { phone: string }) {
 }
 
 /**
- * `phone` and `hours` are the admin-saved contact details, so this matches the
- * contact page. tel:/sms: keep only digits and a leading +.
+ * `phone`, `email` and `hours` are the admin-saved contact details, so this
+ * matches the contact page. tel:/sms: keep only digits and a leading +. With no
+ * phone saved, the call/text options give way to email.
  */
-export default function TermsContactSection({ phone, hours }: { phone: string; hours: string }) {
+export default function TermsContactSection({ phone, email, hours }: { phone: string; email: string; hours: string }) {
   const dialable = phone.replace(/[^\d+]/g, '')
   const [submitted, setSubmitted] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', message: '' })
@@ -54,15 +55,23 @@ export default function TermsContactSection({ phone, hours }: { phone: string; h
 
         <div className="space-y-3">
           <p className="text-text-muted">{hours}</p>
-          <CallTextButtons phone={dialable} />
+          {dialable ? (
+            <CallTextButtons phone={dialable} />
+          ) : (
+            <p className="text-text-muted">
+              Email us at <a href={`mailto:${email}`} className="text-accent font-semibold">{email}</a>
+            </p>
+          )}
         </div>
 
-        <div>
-          <p className="font-bold">Non business days (weekends/holidays):</p>
-          <p className="text-text-muted">
-            Please <strong>TEXT</strong> only. No phone calls are answered.
-          </p>
-        </div>
+        {dialable && (
+          <div>
+            <p className="font-bold">Non business days (weekends/holidays):</p>
+            <p className="text-text-muted">
+              Please <strong>TEXT</strong> only. No phone calls are answered.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Right: contact form */}

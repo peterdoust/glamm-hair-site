@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { MessageCircle, Phone, Mail, ArrowRight } from 'lucide-react'
+import { MessageCircle, Mail, ArrowRight } from 'lucide-react'
 
 export function FAQPagePromo() {
   return (
@@ -44,7 +44,7 @@ export function FAQPagePromo() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
+          <div className="grid md:grid-cols-2 gap-8 mb-16">
             {[
               {
                 icon: MessageCircle,
@@ -52,13 +52,6 @@ export function FAQPagePromo() {
                 description: 'Chat with our experts now',
                 cta: 'Start Chat',
                 href: '#chat'
-              },
-              {
-                icon: Phone,
-                title: 'Call Us',
-                description: 'Mon-Fri 9am-6pm EST',
-                cta: 'Call Now',
-                href: 'tel:+13104615791'
               },
               {
                 icon: Mail,
