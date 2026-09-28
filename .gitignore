@@ -14,3 +14,6 @@ supabase/*_rows.csv
 # Office temp / lock files
 ~$*
 *.tmp
+
+.vercel
+.env*
