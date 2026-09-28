@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Instagram } from 'lucide-react'
 import PaymentMethods from '@/components/PaymentMethods'
+import { INSTAGRAM_URL } from '@/lib/content'
 
 export default function Footer() {
   return (
@@ -24,7 +25,7 @@ export default function Footer() {
           </p>
           <div className="mt-4 flex gap-3">
             <a
-              href="https://www.instagram.com/glammhair_extenions"
+              href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full bg-white/10 hover:bg-accent transition-all duration-300 group"

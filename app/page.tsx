@@ -7,6 +7,8 @@ import { LucyGallery } from '@/components/LucyGallery'
 import { getProducts, getCategories } from '@/lib/products'
 import { getHero, getShippingConfig, getTestimonialsSection } from '@/lib/settings'
 import { getTestimonials, summarise } from '@/lib/testimonials'
+import { getInstagramPosts } from '@/lib/instagram'
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL } from '@/lib/content'
 import { BadgeCheck, Package, ShieldCheck, Heart, Star, Mail, Gift, Instagram } from 'lucide-react'
 import ReviewCarousel from '@/components/ReviewCarousel'
 
@@ -18,13 +20,14 @@ export const metadata: Metadata = {
 export const revalidate = 60
 
 export default async function Home() {
-  const [products, categories, shipping, testimonials, testimonialsSection, hero] = await Promise.all([
+  const [products, categories, shipping, testimonials, testimonialsSection, hero, instagramPosts] = await Promise.all([
     getProducts(),
     getCategories(),
     getShippingConfig(),
     getTestimonials(),
     getTestimonialsSection(),
     getHero(),
+    getInstagramPosts(),
   ])
 
   // The badge above the carousel: averaged over the testimonials actually shown.
@@ -142,7 +145,7 @@ export default async function Home() {
         </div>
         <div className="card p-8 md:p-12 text-center">
           <h3 className="text-2xl font-bold mb-2">Follow Us on Instagram</h3>
-          <p className="text-accent font-medium mb-4">@glammhair_extenions</p>
+          <p className="text-accent font-medium mb-4">@{INSTAGRAM_HANDLE}</p>
           <p className="text-text-muted mb-6">Get daily inspiration, behind-the-scenes content, styling tips, and see our latest hair transformations!</p>
           <div className="flex flex-wrap justify-center gap-4 mb-8">
             <span className="px-4 py-2 rounded-full bg-background text-sm">Daily Updates</span>
@@ -150,9 +153,9 @@ export default async function Home() {
             <span className="px-4 py-2 rounded-full bg-background text-sm">Client Transformations</span>
             <span className="px-4 py-2 rounded-full bg-background text-sm">Exclusive Offers</span>
           </div>
-          <a href="https://www.instagram.com/glammhair_extenions" target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             <Instagram className="w-5 h-5" />
-            Follow @glammhair_extenions
+            Follow @{INSTAGRAM_HANDLE}
           </a>
         </div>
       </section>
@@ -248,7 +251,7 @@ export default async function Home() {
       </section>
 
       {/* Lucy Gallery Section */}
-      <LucyGallery />
+      <LucyGallery posts={instagramPosts} />
     </>
   )
 }

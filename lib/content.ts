@@ -203,6 +203,10 @@ export type ContactContent = {
   facebookHref: string
 }
 
+/** The shop's Instagram account — every handle and profile link reads these. */
+export const INSTAGRAM_HANDLE = 'glammhairextensions2026'
+export const INSTAGRAM_URL = `https://www.instagram.com/${INSTAGRAM_HANDLE}`
+
 /**
  * Customer contact is email-only for now: the storefront shows no phone even
  * when one is saved in Admin → Contact. Flip to true to bring it back.
@@ -228,7 +232,7 @@ export const DEFAULT_CONTACT: ContactContent = {
   hours: 'Mon-Fri: 9AM-6PM PST',
   socialHeading: 'Follow Us',
   socialBlurb: 'Stay connected for styling tips, new arrivals, and exclusive offers!',
-  instagramHref: 'https://www.instagram.com/glammhair_extenions',
+  instagramHref: INSTAGRAM_URL,
   facebookHref: 'https://facebook.com',
 }
 
