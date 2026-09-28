@@ -36,15 +36,17 @@ export default function Hero({ content = DEFAULT_HERO }: { content?: HeroContent
             fill
             sizes="100vw"
             className={`object-cover object-[center_30%] transition-all duration-1000 ${imageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-105'}`}
+            // A gentle lift for a brighter, cleaner photo that still reads natural.
+            style={{ filter: 'brightness(1.1) contrast(1.04) saturate(1.03)' }}
             priority
           />
         </div>
-        {/* Gradient Overlays - Reduced tint for more visible background */}
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,17,33,0.55), rgba(10,17,33,0.2), rgba(10,17,33,0.55))' }}></div>
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,17,33,0.45), transparent, rgba(10,17,33,0.15))' }}></div>
+        {/* Gradient Overlays - kept light so the photo stays bright; just enough at the edges and bottom for the text */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(10,17,33,0.25), rgba(10,17,33,0.05), rgba(10,17,33,0.25))' }}></div>
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(10,17,33,0.35), transparent 55%)' }}></div>
         {/* Decorative Blurs */}
-        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full blur-[100px] opacity-30" style={{ background: '#f68961' }}></div>
-        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[100px] opacity-20" style={{ background: '#febf6b' }}></div>
+        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] rounded-full blur-[100px] opacity-15" style={{ background: '#f68961' }}></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full blur-[100px] opacity-10" style={{ background: '#febf6b' }}></div>
       </div>
 
       {/* Content */}
@@ -53,7 +55,7 @@ export default function Hero({ content = DEFAULT_HERO }: { content?: HeroContent
           {/* Badge */}
           <div
             className="inline-flex items-center gap-3 px-6 py-3 rounded-full backdrop-blur-md"
-            style={{ background: 'rgba(246, 137, 97, 0.15)', border: '1px solid rgba(246, 137, 97, 0.4)' }}
+            style={{ background: 'rgba(10, 17, 33, 0.4)', border: '1px solid rgba(246, 137, 97, 0.5)' }}
           >
             <Star className="w-5 h-5 fill-current" style={{ color: '#febf6b' }} />
             <span className="text-sm font-semibold text-white uppercase tracking-wider">{content.badge}</span>
@@ -62,7 +64,7 @@ export default function Hero({ content = DEFAULT_HERO }: { content?: HeroContent
           {/* Main Heading */}
           <div className="space-y-6">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold leading-[1.05] tracking-tight">
-              <span className="block text-white mb-3 drop-shadow-lg">{content.headingTop}</span>
+              <span className="block text-white mb-3" style={{ textShadow: '0 2px 18px rgba(10,17,33,0.45)' }}>{content.headingTop}</span>
               <span
                 className="block drop-shadow-lg"
                 style={{ background: 'linear-gradient(135deg, #f68961, #febf6b, #ffc9a7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
@@ -73,7 +75,7 @@ export default function Hero({ content = DEFAULT_HERO }: { content?: HeroContent
           </div>
 
           {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-white/90 leading-relaxed font-light max-w-3xl mx-auto drop-shadow-md">
+          <p className="text-xl md:text-2xl text-white leading-relaxed font-light max-w-3xl mx-auto" style={{ textShadow: '0 1px 10px rgba(10,17,33,0.55)' }}>
             {content.subtitle}
             <span className="block mt-3 font-medium drop-shadow-sm" style={{ color: '#ffc9a7' }}>
               {content.subtitleAccent}
