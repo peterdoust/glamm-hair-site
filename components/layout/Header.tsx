@@ -21,6 +21,7 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
+  { href: '/shop?category=crochet-hair', label: 'Crochet Hair' },
   {
     href: '/shop',
     label: 'Shop',
@@ -31,6 +32,7 @@ const navLinks: NavLink[] = [
       { href: '/shop?category=curly', label: 'Curly' },
       { href: '/shop?category=closures', label: 'Closures' },
       { href: '/shop?category=bulk-hair', label: 'Bulk Hair' },
+      { href: '/shop?category=crochet-hair', label: 'Crochet Hair' },
     ],
   },
   {
@@ -113,7 +115,7 @@ export default function Header() {
       <div className="container-max">
         <div className="flex items-center justify-between h-24">
           {/* Logo */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex shrink-0 items-center group">
             <Image
               src="/glamm-logo.png"
               alt="Glamm Hair Extensions"
@@ -125,7 +127,7 @@ export default function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden lg:flex items-center gap-8 whitespace-nowrap">
             {navLinks.map((link) => (
               link.children ? (
                 <div key={link.label} className="relative group py-8">
@@ -170,7 +172,7 @@ export default function Header() {
 
             {/* Search — collapsed to an icon until asked for, so the bar stays clean */}
             {searchOpen ? (
-              <form onSubmit={submitSearch} className="hidden md:flex items-center">
+              <form onSubmit={submitSearch} className="hidden lg:flex items-center">
                 <input
                   ref={searchInput}
                   value={term}
@@ -189,7 +191,7 @@ export default function Header() {
               <button
                 type="button"
                 onClick={openSearch}
-                className="hidden md:block p-2 hover:text-accent transition-colors"
+                className="hidden lg:block p-2 hover:text-accent transition-colors"
                 aria-label="Search products"
               >
                 <Search className="w-6 h-6" />
@@ -224,7 +226,7 @@ export default function Header() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden p-2"
+              className="lg:hidden p-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle Menu"
             >
@@ -236,7 +238,7 @@ export default function Header() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <nav className="md:hidden bg-white border-t border-border shadow-lg">
+        <nav className="lg:hidden bg-white border-t border-border shadow-lg">
           <div className="container-max py-4 space-y-1">
             {/* On mobile the field lives in the menu rather than crowding the bar */}
             <form onSubmit={submitSearch} className="flex items-center gap-2 px-4 pb-3">

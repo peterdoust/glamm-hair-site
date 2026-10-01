@@ -44,6 +44,7 @@ export default function Footer() {
             <li><Link href="/shop?category=straight" className="hover:text-accent transition-colors">Straight</Link></li>
             <li><Link href="/shop?category=curly" className="hover:text-accent transition-colors">Curly</Link></li>
             <li><Link href="/shop?category=closures" className="hover:text-accent transition-colors">Closures</Link></li>
+            <li><Link href="/shop?category=crochet-hair" className="hover:text-accent transition-colors">Crochet Hair</Link></li>
           </ul>
         </div>
 
