@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import ConditionalChrome from '@/components/layout/ConditionalChrome'
 import { CartProvider } from '@/contexts/CartContext'
 import { WishlistProvider } from '@/contexts/WishlistContext'
@@ -8,6 +8,15 @@ import { ShippingProvider } from '@/contexts/ShippingContext'
 export const metadata: Metadata = {
   title: 'Glamm Hair Extensions | Premium 100% Virgin Human Hair',
   description: 'Premium 100% virgin human hair extensions. Wavy, straight, curly styles & HD closures. Free shipping & 30-day returns.',
+  applicationName: 'Glamm',
+  // Opened from the home screen on iPhone, run full-screen like an app.
+  appleWebApp: { capable: true, title: 'Glamm', statusBarStyle: 'default' },
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#ffffff',
 }
 
 export default function RootLayout({

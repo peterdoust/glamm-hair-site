@@ -1,6 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import CartToast from '@/components/CartToast'
 
 export interface CartItem {
   id: number
@@ -16,6 +17,13 @@ export interface CartItem {
   selectedPrice: number
 }
 
+/** The most recent add, shown in the "Added to cart" pop-up. `key` changes on
+ *  every add so adding the same item twice restarts the pop-up's timer. */
+export interface AddedNotice {
+  item: CartItem
+  key: number
+}
+
 interface CartContextType {
   cart: CartItem[]
   addToCart: (item: Omit<CartItem, 'quantity'> & { quantity?: number }) => void
@@ -24,6 +32,8 @@ interface CartContextType {
   clearCart: () => void
   getCartTotal: () => number
   getCartCount: () => number
+  lastAdded: AddedNotice | null
+  dismissAddedNotice: () => void
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
@@ -31,6 +41,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined)
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
   const [isLoaded, setIsLoaded] = useState(false)
+  const [lastAdded, setLastAdded] = useState<AddedNotice | null>(null)
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -68,7 +79,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       return [...prevCart, { ...item, quantity: item.quantity || 1 }]
     })
+    // Outside the updater: StrictMode runs updaters twice in development.
+    setLastAdded({ item: { ...item, quantity: item.quantity || 1 }, key: Date.now() })
   }
+
+  const dismissAddedNotice = () => setLastAdded(null)
 
   const removeFromCart = (id: number, size: string) => {
     setCart((prevCart) => prevCart.filter((item) => !(item.id === id && item.size === size)))
@@ -109,9 +124,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
         clearCart,
         getCartTotal,
         getCartCount,
+        lastAdded,
+        dismissAddedNotice,
       }}
     >
       {children}
+      <CartToast />
     </CartContext.Provider>
   )
 }
