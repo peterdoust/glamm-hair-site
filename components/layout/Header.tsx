@@ -121,7 +121,7 @@ export default function Header() {
               alt="Glamm Hair Extensions"
               width={1164}
               height={548}
-              className="h-16 w-auto md:h-20 md:w-auto"
+              className="h-12 min-[360px]:h-16 w-auto md:h-20 md:w-auto"
               priority
             />
           </Link>
@@ -167,7 +167,8 @@ export default function Header() {
           </nav>
 
           {/* Icons */}
-          <div className="flex items-center gap-4">
+          {/* Tighter on small phones so the menu button isn't pushed off the right edge */}
+          <div className="flex items-center gap-1 sm:gap-4">
             <AccountMenu />
 
             {/* Search — collapsed to an icon until asked for, so the bar stays clean */}
