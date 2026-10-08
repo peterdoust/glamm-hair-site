@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, Lock, User, Loader2 } from 'lucide-react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
+import SocialLogin from '@/components/auth/SocialLogin'
 
 function RegisterForm() {
   const router = useRouter()
@@ -64,6 +65,7 @@ function RegisterForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="card p-8 space-y-4">
+          <SocialLogin next={next} />
           {error && (
             <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">{error}</div>
           )}

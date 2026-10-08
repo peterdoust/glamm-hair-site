@@ -5,13 +5,16 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Mail, Lock, Loader2 } from 'lucide-react'
 import { createSupabaseBrowserClient } from '@/lib/supabase/client'
+import SocialLogin from '@/components/auth/SocialLogin'
 
 function LoginForm() {
   const searchParams = useSearchParams()
   const next = searchParams.get('next') || '/account'
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(
+    searchParams.get('error') === 'social' ? 'Facebook sign-in did not complete. Please try again or use your email.' : null,
+  )
   const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,6 +48,7 @@ function LoginForm() {
         </div>
 
         <form onSubmit={handleSubmit} className="card p-8 space-y-4">
+          <SocialLogin next={next} />
           {error && (
             <div className="rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">{error}</div>
           )}

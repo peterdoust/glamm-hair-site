@@ -110,10 +110,10 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {/* Badge with Glow */}
           {product.badge && (
-            <div className="absolute top-3 left-3 z-20">
+            <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-20 max-w-[60%]">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-accent to-accent-dark rounded-xl blur-md opacity-75"></div>
-                <div className="relative px-3 py-1.5 rounded-xl bg-gradient-to-r from-accent to-accent-dark text-white text-xs font-bold shadow-xl flex items-center gap-1.5 border border-white/20">
+                <div className="relative px-2 py-1 sm:px-3 sm:py-1.5 rounded-xl bg-gradient-to-r from-accent to-accent-dark text-white text-[10px] sm:text-xs font-bold shadow-xl flex items-center gap-1.5 border border-white/20">
                   {product.badge}
                 </div>
               </div>
@@ -124,7 +124,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             onClick={toggleWishlist}
             aria-label={inWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
-            className={`absolute top-3 right-3 w-10 h-10 rounded-lg backdrop-blur-md flex items-center justify-center transition-all duration-300 shadow-lg z-20 border-2 ${inWishlist ? 'bg-accent text-white border-accent' : 'bg-white/90 text-text hover:bg-accent hover:text-white border-white/50 hover:border-accent'}`}
+            className={`absolute top-2 right-2 sm:top-3 sm:right-3 w-8 h-8 sm:w-10 sm:h-10 rounded-lg backdrop-blur-md flex items-center justify-center transition-all duration-300 shadow-lg z-20 border-2 ${inWishlist ? 'bg-accent text-white border-accent' : 'bg-white/90 text-text hover:bg-accent hover:text-white border-white/50 hover:border-accent'}`}
           >
             <Heart className={`w-4 h-4 ${inWishlist ? 'fill-current' : ''}`} />
           </button>
@@ -138,16 +138,16 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         {/* Content */}
-        <div className="flex-1 flex flex-col p-4 bg-white relative">
+        <div className="flex-1 flex flex-col p-2.5 sm:p-4 bg-white relative">
           {/* Top Accent Line */}
           <div className="absolute top-0 left-4 right-4 h-1 bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
 
           {/* Category & Rating Row */}
-          <div className="flex items-center justify-between mb-2.5">
-            <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-accent/10 to-accent-dark/10 text-accent text-xs font-bold uppercase tracking-wider border border-accent/20">
+          <div className="flex items-center justify-between gap-1 mb-2 sm:mb-2.5 min-w-0">
+            <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full bg-gradient-to-r from-accent/10 to-accent-dark/10 text-accent text-[10px] sm:text-xs font-bold uppercase tracking-wider border border-accent/20 truncate min-w-0">
               {product.category}
             </span>
-            <div className="flex gap-0.5">
+            <div className="hidden min-[400px]:flex gap-0.5 shrink-0">
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-3 h-3 fill-accent text-accent" />
               ))}
@@ -155,54 +155,54 @@ export default function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* Title */}
-          <div className="mb-2.5">
-            <h3 className="font-bold text-base mb-1 text-text group-hover:text-accent transition-colors duration-300 line-clamp-2 leading-tight">
+          <div className="mb-2 sm:mb-2.5">
+            <h3 className="font-bold text-sm sm:text-base mb-1 text-text group-hover:text-accent transition-colors duration-300 line-clamp-2 leading-tight">
               {product.title}
             </h3>
             <div className="h-0.5 w-10 bg-gradient-to-r from-accent to-transparent rounded-full group-hover:w-16 transition-all duration-500"></div>
           </div>
 
           {/* Price Section */}
-          <div className="mt-auto mb-3">
-            <div className="relative overflow-hidden rounded-xl p-3 bg-gradient-to-br from-accent/10 via-accent/5 to-accent-dark/10 border-2 border-accent/20">
+          <div className="mt-auto mb-2 sm:mb-3">
+            <div className="relative overflow-hidden rounded-xl p-2 sm:p-3 bg-gradient-to-br from-accent/10 via-accent/5 to-accent-dark/10 border-2 border-accent/20">
               <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'linear-gradient(45deg, transparent 48%, rgba(201,169,126,0.1) 49%, rgba(201,169,126,0.1) 51%, transparent 52%)', backgroundSize: '20px 20px' }}></div>
               <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               <div className="relative">
                 <p className="text-xs text-text-muted font-medium mb-0.5">Starting at</p>
                 <div className="flex items-baseline gap-1.5">
-                  <span className="text-2xl font-bold bg-gradient-to-r from-accent via-accent-dark to-accent bg-clip-text text-transparent">${product.priceMin}.00</span>
+                  <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-accent via-accent-dark to-accent bg-clip-text text-transparent">${product.priceMin}.00</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Tags Row */}
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
+          <div className="flex items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3 flex-wrap">
             {product.inStock ? (
-              <div className="flex items-center gap-1 text-xs font-semibold text-green-700 bg-green-50 px-2.5 py-1.5 rounded-lg border border-green-200">
+              <div className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-green-700 bg-green-50 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border border-green-200">
                 <Check className="w-3 h-3" />
                 <span>In Stock</span>
               </div>
             ) : (
-              <div className="flex items-center gap-1 text-xs font-semibold text-gray-600 bg-gray-100 px-2.5 py-1.5 rounded-lg border border-gray-200">
+              <div className="flex items-center gap-1 text-[11px] sm:text-xs font-semibold text-gray-600 bg-gray-100 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border border-gray-200">
                 <span>Out of Stock</span>
               </div>
             )}
-            <div className="flex items-center gap-1 text-xs font-semibold text-accent bg-accent/10 px-2.5 py-1.5 rounded-lg border border-accent/20">
+            <div className="hidden sm:flex items-center gap-1 text-xs font-semibold text-accent bg-accent/10 px-2.5 py-1.5 rounded-lg border border-accent/20">
               <span>Free Ship</span>
             </div>
-            <div className="flex items-center gap-1 text-xs font-semibold text-text-muted bg-surface px-2.5 py-1.5 rounded-lg border border-border">
+            <div className="hidden sm:flex items-center gap-1 text-xs font-semibold text-text-muted bg-surface px-2.5 py-1.5 rounded-lg border border-border">
               <Ruler className="w-3 h-3" />
               <span>{product.sizes?.length || 8} Lengths</span>
             </div>
           </div>
 
           {/* View Details Button */}
-          <button className="relative w-full py-3 rounded-xl overflow-hidden font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 shadow-md hover:shadow-lg group/button">
+          <button className="relative w-full py-2 sm:py-3 rounded-xl overflow-hidden font-bold transition-all duration-300 hover:scale-105 flex items-center justify-center gap-2 shadow-md hover:shadow-lg group/button">
             <div className="absolute inset-0 bg-gradient-to-r from-accent via-accent-dark to-accent bg-[length:200%_100%] animate-gradient"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover/button:translate-x-full transition-transform duration-700"></div>
-            <Eye className="w-4 h-4 text-white relative z-10" />
-            <span className="text-white relative z-10 text-sm">View Details</span>
+            <Eye className="hidden sm:block w-4 h-4 text-white relative z-10" />
+            <span className="text-white relative z-10 text-xs sm:text-sm">View Details</span>
           </button>
         </div>
       </div>

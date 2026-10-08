@@ -25,6 +25,7 @@ export default function ProductPage() {
   const [selectedSize, setSelectedSize] = useState('')
   const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
+  const [sizeError, setSizeError] = useState(false)
   const [activeTab, setActiveTab] = useState('description')
   const [selectedImage, setSelectedImage] = useState(0)
   const [ratingSummary, setRatingSummary] = useState<{ average: number; count: number }>({ average: 0, count: 0 })
@@ -85,7 +86,7 @@ export default function ProductPage() {
   const handleAddToCart = () => {
     if (!product.inStock) return
     if (!selectedSize) {
-      alert('Please select a size')
+      setSizeError(true)
       return
     }
     addToCart({
@@ -309,7 +310,10 @@ export default function ProductPage() {
                 {product.sizes.map((size) => (
                   <button
                     key={size}
-                    onClick={() => setSelectedSize(size)}
+                    onClick={() => {
+                      setSelectedSize(size)
+                      setSizeError(false)
+                    }}
                     className={`px-4 py-4 border-2 rounded-xl font-bold transition-all hover:scale-105 ${
                       selectedSize === size
                         ? 'border-accent bg-gradient-to-r from-accent to-accent-dark text-white shadow-lg scale-105'
@@ -340,10 +344,10 @@ export default function ProductPage() {
 
               {/* No Size Selected Message */}
               {!selectedSize && (
-                <div className="mt-6 p-6 bg-surface rounded-2xl border-2 border-dashed border-border">
-                  <p className="text-text-muted text-center flex items-center justify-center gap-2">
+                <div className={`mt-6 p-6 rounded-2xl border-2 border-dashed ${sizeError ? 'bg-red-50 border-red-300' : 'bg-surface border-border'}`}>
+                  <p className={`text-center flex items-center justify-center gap-2 ${sizeError ? 'text-red-600 font-semibold' : 'text-text-muted'}`}>
                     <Info className="w-5 h-5" />
-                    Select a length to see the price
+                    {sizeError ? 'Please select a length before adding to cart' : 'Select a length to see the price'}
                   </p>
                 </div>
               )}
@@ -379,8 +383,8 @@ export default function ProductPage() {
                 disabled={!product.inStock}
                 className="btn btn-primary btn-lg flex-1 flex items-center justify-center gap-3 text-lg disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
-                <ShoppingCart className="w-6 h-6" />
-                {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                {addedToCart ? <Check className="w-6 h-6" /> : <ShoppingCart className="w-6 h-6" />}
+                {!product.inStock ? 'Out of Stock' : addedToCart ? 'Added to Cart' : 'Add to Cart'}
               </button>
               <button
                 onClick={handleWishlistToggle}
@@ -527,7 +531,7 @@ export default function ProductPage() {
                 <ChevronRight className="w-5 h-5" />
               </Link>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               {relatedProducts.map((relatedProduct, index) => (
                 <div key={relatedProduct.id} className="animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
                   <ProductCard product={relatedProduct} />
