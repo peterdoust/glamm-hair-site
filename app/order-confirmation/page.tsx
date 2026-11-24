@@ -3,6 +3,7 @@ import { CheckCircle, Package, Mail, Home } from 'lucide-react'
 import { getStripe } from '@/lib/stripe'
 import { createOrderFromPaymentIntent } from '@/lib/checkout/stripeOrder'
 import { getOrderSummary } from '@/lib/orders'
+import PurchaseConversion from '@/components/analytics/PurchaseConversion'
 
 export const dynamic = 'force-dynamic'
 
@@ -33,6 +34,13 @@ export default async function OrderConfirmationPage({
 
   return (
     <div className="section">
+      {summary && (
+        <PurchaseConversion
+          orderNumber={summary.orderNumber}
+          value={summary.total}
+          currency={summary.currency}
+        />
+      )}
       <div className="container-max max-w-3xl">
         <div className="text-center mb-12">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 mb-6">
