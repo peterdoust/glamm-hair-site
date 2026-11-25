@@ -64,7 +64,7 @@ export function LucyGallery({ posts }: { posts: InstagramPost[] }) {
               href={photo.permalink}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative aspect-square rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:z-10"
+              className="group relative aspect-[3/4] rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 hover:z-10"
             >
               {/* Image */}
               <Image
